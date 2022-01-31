@@ -20,7 +20,7 @@ type HomeProps = {
 }
 
 const Home = ({setTheme, isDark}: HomeProps) => {
-	const [css, theme] = useStyletron()
+	const [css] = useStyletron()
 	const [isOpen, setIsOpen] = React.useState(false)
 
 	const close = () => {
