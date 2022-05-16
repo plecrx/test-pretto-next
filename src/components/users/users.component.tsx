@@ -5,6 +5,8 @@ import UsersList from './usersList.component'
 import {User} from '../../models/user'
 import TextField from '../textfield/textfield.component'
 import HeroHeader from '../heroHeader/heroHeader.component'
+import useSWR from 'swr'
+import {fetcher} from '../../utils/fetcher'
 
 const Container = styled.div<{mobileView: boolean}>`
 	display: flex;
@@ -18,14 +20,12 @@ interface Size {
 	height: number
 }
 
-type UsersProps = {
-	users: User[]
-}
-
-const Users = ({users}: UsersProps) => {
+const Users = () => {
 	const [size, setSize] = useState<Size>()
 	const [displayedUsers, setDisplayedUsers] = useState<Array<User>>([])
 	const [textFieldValue, setTextFieldValue] = useState('')
+	const {data, error} = useSWR('/api/users', fetcher)
+
 	const isMobile = !size || size.width <= 600
 
 	const resizeHandler = () => {
@@ -39,15 +39,18 @@ const Users = ({users}: UsersProps) => {
 	}
 
 	useEffect(() => {
-		setDisplayedUsers(users)
-	}, [users])
+		setDisplayedUsers(data)
+	}, [data])
 
 	useEffect(() => {
+		const users = data || []
 		if (textFieldValue === '') {
 			setDisplayedUsers(users)
 		}
-		setDisplayedUsers(users.filter(u => u.username.includes(textFieldValue)))
-	}, [textFieldValue, users])
+		setDisplayedUsers(
+			users.filter((u: {username: string}) => u.username.includes(textFieldValue)),
+		)
+	}, [textFieldValue, data])
 
 	useEffect(() => {
 		window.onresize = resizeHandler
@@ -63,6 +66,8 @@ const Users = ({users}: UsersProps) => {
 					value={textFieldValue}
 				/>
 			</HeroHeader>
+			{!error && !data && <div>Loading...</div>}
+			{error && <div>Failed to load users !</div>}
 			{isMobile ? (
 				<UsersList users={displayedUsers} />
 			) : (

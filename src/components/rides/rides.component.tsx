@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import {Ride} from '../api/ridesApi/types/ride'
-import {RidesClient} from '../api/ridesApi/ridesClient'
 import {ListHeading, ListItem} from 'baseui/list'
 import styled from '@emotion/styled'
 import {H1} from 'baseui/typography'
-import {Spinner} from 'baseui/spinner'
 import {ArrowDown} from 'baseui/icon'
 import {Block} from 'baseui/block'
+import useSWR from 'swr'
+import {Ride} from '../../models/ride'
+import {fetcher} from '../../utils/fetcher'
 
 const Container = styled(Block)`
 	margin: 0;
@@ -22,20 +22,11 @@ const StyledList = styled.div`
 
 const Rides = () => {
 	const [rides, setRides] = useState<Ride[]>([])
-	const [loading, setLoading] = useState<boolean>(false)
-
-	const fetchRides = async () => {
-		const baseUrl = 'https://paristaxiflares.herokuapp.com'
-		const ridesClient = new RidesClient(baseUrl)
-		const _rides = await ridesClient.getRides()
-		setRides(_rides)
-		setLoading(false)
-	}
+	const {data, error} = useSWR('/api/rides', fetcher)
 
 	useEffect(() => {
-		setLoading(true)
-		fetchRides()
-	}, [])
+		setRides(data)
+	}, [data])
 
 	return (
 		<Container
@@ -60,9 +51,11 @@ const Rides = () => {
 						},
 					}}
 				>
-					<H1>Choose a trip</H1>
+					<H1>Choose a ride</H1>
 				</ListItem>
-				{!loading ? (
+				{!error && !data && <div>Loading...</div>}
+				{error && <div>Failed to load rides !</div>}
+				{!error &&
 					rides.map(ride => (
 						<ListHeading
 							key={`ride-${ride.id}`}
@@ -79,10 +72,7 @@ const Rides = () => {
 								},
 							}}
 						/>
-					))
-				) : (
-					<Spinner />
-				)}
+					))}
 			</StyledList>
 		</Container>
 	)
