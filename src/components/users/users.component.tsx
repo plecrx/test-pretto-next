@@ -7,6 +7,7 @@ import TextField from '../textfield/textfield.component'
 import HeroHeader from '../heroHeader/heroHeader.component'
 import useSWR from 'swr'
 import {fetcher} from '../../utils/fetcher'
+import {Size, useWindowSize} from '../../hooks/useWindowSize'
 
 const Container = styled.div<{mobileView: boolean}>`
 	display: flex;
@@ -15,24 +16,13 @@ const Container = styled.div<{mobileView: boolean}>`
 	margin: ${({mobileView}) => (mobileView ? '0' : '0 84px 138px')};
 `
 
-interface Size {
-	width: number
-	height: number
-}
-
 const Users = () => {
-	const [size, setSize] = useState<Size>()
+	const size: Size = useWindowSize()
 	const [displayedUsers, setDisplayedUsers] = useState<Array<User>>([])
 	const [textFieldValue, setTextFieldValue] = useState('')
 	const {data, error} = useSWR('/api/users', fetcher)
 
 	const isMobile = !size || size.width <= 600
-
-	const resizeHandler = () => {
-		const width = window.innerWidth
-		const height = window.innerHeight
-		setSize({width, height})
-	}
 
 	const handleTextFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setTextFieldValue(event.currentTarget.value)
@@ -52,10 +42,6 @@ const Users = () => {
 		)
 	}, [textFieldValue, data])
 
-	useEffect(() => {
-		window.onresize = resizeHandler
-	}, [])
-
 	return (
 		<Container mobileView={isMobile}>
 			<HeroHeader title={'People'}>
@@ -68,11 +54,8 @@ const Users = () => {
 			</HeroHeader>
 			{!error && !data && <div>Loading...</div>}
 			{error && <div>Failed to load users !</div>}
-			{isMobile ? (
-				<UsersList users={displayedUsers} />
-			) : (
-				<UsersTable users={displayedUsers} />
-			)}
+			{isMobile && <UsersList users={displayedUsers} />}
+			{!isMobile && <UsersTable users={displayedUsers} />}
 		</Container>
 	)
 }
