@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {Ride} from '../../api/RidesApi/types/ride'
-import {RidesClient} from '../../api/RidesApi/ridesClient'
+import {Ride} from '../api/ridesApi/types/ride'
+import {RidesClient} from '../api/ridesApi/ridesClient'
 import {ListHeading, ListItem} from 'baseui/list'
 import styled from '@emotion/styled'
 import {H1} from 'baseui/typography'
@@ -20,7 +20,7 @@ const StyledList = styled.div`
 	width: 60em;
 `
 
-export const Rides = () => {
+const Rides = () => {
 	const [rides, setRides] = useState<Ride[]>([])
 	const [loading, setLoading] = useState<boolean>(false)
 
@@ -87,3 +87,5 @@ export const Rides = () => {
 		</Container>
 	)
 }
+
+export default Rides

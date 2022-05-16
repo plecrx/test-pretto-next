@@ -1,7 +1,7 @@
-import HttpClient from '../httpClient'
-import {Ride} from './types/ride'
+import HttpClient from './httpClient'
+import {Ride} from '../models/ride'
 
-export class RidesClient extends HttpClient {
+export class RidesApi extends HttpClient {
 	async getRides(): Promise<Ride[]> {
 		const response = await this.instance.get<Ride[]>('/rides')
 
