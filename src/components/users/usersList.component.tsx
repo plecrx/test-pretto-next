@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {User} from './usersTable.component'
 import Card from '../card/card.component'
 import Checkbox from '../checkbox/checkbox.component'
 import {ButtonMore} from '../button/button'
 import {ProtectedStatus} from '../status/status.component'
 import NoDataLabel from '../noDataLabel/noDataLabel.component'
+import {User} from '../../models/user'
 
 const HeaderListContainer = styled.div`
 	display: flex;
