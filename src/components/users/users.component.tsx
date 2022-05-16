@@ -10,7 +10,7 @@ const Container = styled.div<{mobileView: boolean}>`
 	display: flex;
 	flex-direction: column;
 	gap: 40px;
-	margin: ${({mobileView}) => (mobileView ? '0' : '48px 84px 138px')};
+	margin: ${({mobileView}) => (mobileView ? '0' : '0 84px 138px')};
 `
 
 interface Size {

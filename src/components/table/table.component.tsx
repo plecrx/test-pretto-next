@@ -26,7 +26,7 @@ const TableRow = styled.tr<{
 }>`
 	td {
 		background-color: ${({theme, isSelected}) =>
-			isSelected ? theme.colors.neutral4Hover : theme.colors.white};
+			isSelected ? theme.colors.accent1 : theme.colors.white};
 	}
 	td:first-child {
 		border-top-left-radius: ${({isSelectionStart}) => isSelectionStart && '8px'};
@@ -42,15 +42,9 @@ const TableRowHeader = styled.tr`
 	margin: 24px;
 	padding: 24px;
 	color: ${({theme}) => theme.colors.neutral2};
-	th:first-child {
+	th {
 		border-top-left-radius: 8px;
 		border-bottom-left-radius: 8px;
-	}
-	th:last-child {
-		border-top-right-radius: 8px;
-		border-bottom-right-radius: 8px;
-	}
-	th {
 		background-color: ${({theme}) => theme.colors.neutral4Hover};
 	}
 `
@@ -101,8 +95,10 @@ const Table = ({columns, data}: TableProps) => {
 	})
 
 	const isSelectionStart = (index: number): boolean =>
+		selectedFlatRows.includes(rows[index]) &&
 		!selectedFlatRows.includes(rows[index - 1])
 	const isSelectionEnd = (index: number): boolean =>
+		selectedFlatRows.includes(rows[index]) &&
 		!selectedFlatRows.includes(rows[index + 1])
 
 	return (

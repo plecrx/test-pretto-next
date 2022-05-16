@@ -3,9 +3,8 @@ import {Block} from 'baseui/block'
 import {ReactNode} from 'react'
 
 const Container = styled(Block)`
-	padding-left: calc(8.33333%);
-	padding-right: calc(8.33333%);
-	margin-top: 1.5em;
+	padding-inline: calc(8.33333%);
+	margin-top: 48px;
 	border-radius: 8px;
 	display: flex;
 	justify-content: center;
