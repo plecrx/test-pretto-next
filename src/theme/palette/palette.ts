@@ -30,4 +30,5 @@ export const palette = {
 	trustpilot: '#00B67A',
 	twitter: '#1DA1F2',
 	whatsapp: '#25D366',
+	test: '#ffffff',
 }
