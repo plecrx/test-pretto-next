@@ -1,11 +1,10 @@
-import {ReactNode, useState} from 'react'
+import React, {ReactNode, useState} from 'react'
+import styled from '@emotion/styled'
 import {DarkTheme, LightTheme, Theme, ThemeProvider, useStyletron} from 'baseui'
 import {Block} from 'baseui/block'
+import BodyLayout from './body.layout'
 import Navbar from '../components/navbar/navbar.component'
 import Menu from '../components/menu/menu.component'
-import * as React from 'react'
-import styled from '@emotion/styled'
-import BodyLayout from './body.layout'
 
 const Container = styled(Block)`
 	display: flex;

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import {ThemeProvider as StyledComponentThemeProvider} from 'styled-components'
 import {palette} from './palette/palette'
 
 interface ThemeProps {
-	children: JSX.Element
+	children: ReactNode | ReactNode[]
 }
 
 const ThemeProvider = ({children}: ThemeProps) => (
