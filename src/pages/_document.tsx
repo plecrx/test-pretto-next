@@ -29,6 +29,7 @@ class MyDocument extends Document<{stylesheets: Sheet[]}> {
 							key={i}
 						/>
 					))}
+					<title>Prescilla Lecurieux - Immo Project</title>
 				</Head>
 				<body>
 					<Main />
