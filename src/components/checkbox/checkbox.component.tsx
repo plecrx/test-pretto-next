@@ -56,7 +56,7 @@ const CheckboxSymbol = styled(CheckHandwrite)`
 interface CheckboxProps {
 	id?: string
 	isChecked: boolean
-	onChange: React.ChangeEventHandler
+	onChange: () => void
 }
 
 const Checkbox = ({id, isChecked, onChange, ...props}: CheckboxProps) => (

@@ -31,9 +31,12 @@ interface UserListProps {
 }
 
 const UserList = ({users}: UserListProps) => {
-	const [selectedUsers, setSelectedUsers] = useState([])
-	const handleSelect = () => {
-		//setSelectedUsers(e.value)
+	const [selectedUsers, setSelectedUsers] = useState<User[]>([])
+	const handleSelect = (user: User) => {
+		if (selectedUsers.includes(user)) {
+			return setSelectedUsers(selectedUsers.filter(_u => _u !== user))
+		}
+		return setSelectedUsers([...selectedUsers, user])
 	}
 	return (
 		<div>
@@ -42,8 +45,8 @@ const UserList = ({users}: UserListProps) => {
 			{users.map((user, index) => (
 				<Card
 					key={`user-${index}`}
-					checked={selectedUsers.includes(selectedUsers[index])}
-					onToggle={handleSelect}
+					checked={selectedUsers.includes(user)}
+					onToggle={() => handleSelect(user)}
 					title={user.username}
 					id={user.id}
 					status={<ProtectedStatus />}
