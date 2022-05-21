@@ -17,11 +17,17 @@ const HeaderListContainer = styled.div`
 	gap: 65px;
 `
 
-const HeaderList = () => {
+type HeaderListProps = {
+	allChecked: boolean
+	onChange: () => void
+	title: string
+}
+
+const HeaderList = ({allChecked, onChange, title}: HeaderListProps) => {
 	return (
 		<HeaderListContainer>
-			<Checkbox isChecked={false} onChange={() => ''} />
-			<span>Person</span>
+			<Checkbox isChecked={allChecked} onChange={onChange} />
+			<span>{title}</span>
 		</HeaderListContainer>
 	)
 }
@@ -32,6 +38,14 @@ interface UserListProps {
 
 const UserList = ({users}: UserListProps) => {
 	const [selectedUsers, setSelectedUsers] = useState<User[]>([])
+	const allChecked = selectedUsers === users
+	const handleSelectAll = () => {
+		if (allChecked) {
+			return setSelectedUsers([])
+		}
+		return setSelectedUsers(users)
+	}
+
 	const handleSelect = (user: User) => {
 		if (selectedUsers.includes(user)) {
 			return setSelectedUsers(selectedUsers.filter(_u => _u !== user))
@@ -40,7 +54,11 @@ const UserList = ({users}: UserListProps) => {
 	}
 	return (
 		<div>
-			<HeaderList />
+			<HeaderList
+				title='Person'
+				allChecked={allChecked}
+				onChange={handleSelectAll}
+			/>
 			{!users.length && <NoDataLabel />}
 			{users.map((user, index) => (
 				<Card
