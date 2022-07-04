@@ -2,7 +2,7 @@
 
 ## About The Project
 
-Integration of a Figma mockup.
+Integration of a Figma mockup linked to a MongoDB with NextJS.
 
 ### Built With
 
